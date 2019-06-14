@@ -103,18 +103,20 @@ export default class Bubble extends React.PureComponent {
   }
 
   selectMsg = () => {
-    if(this.state.msgSlctd){
-      EventRegister.emit('MsgSelected',{msgid:this.props.currentMessage._id,
-                                        type:this.props.currentMessage.type,
-                                        sts:false});
-      this.setState({msgSlctd:false});
-    }
-    else{
-      EventRegister.emit('MsgSelected',{msgid:this.props.currentMessage._id,
-                                        type:this.props.currentMessage.type,
-                                        sts:true});
-      this.setState({msgSlctd:true});
-			this.props.setSelctnMode(true);
+    if(this.props.canSelectMsg()){
+      if(this.state.msgSlctd){
+        EventRegister.emit('MsgSelected',{msgid:this.props.currentMessage._id,
+                                          type:this.props.currentMessage.type,
+                                          sts:false});
+        this.setState({msgSlctd:false});
+      }
+      else{
+        EventRegister.emit('MsgSelected',{msgid:this.props.currentMessage._id,
+                                          type:this.props.currentMessage.type,
+                                          sts:true});
+        this.setState({msgSlctd:true});
+        this.props.setSelctnMode(true);
+      }
     }
   }
 
