@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
     }),
   },
   attach:{
-    color: 'gray', 
+    color: 'white', 
     paddingRight: 15,
     paddingLeft:15,
-    paddingBottom:10,
+    paddingBottom:8,
     textAlignVertical: 'center',
     textAlign:'center',
-    fontSize:27,
-    alignSelf:'flex-end' 
+    fontSize:29,
+    alignSelf:'flex-end'
   },
   vw1:{ 
     justifyContent: 'center', 
