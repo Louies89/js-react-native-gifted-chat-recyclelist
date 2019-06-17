@@ -370,7 +370,7 @@ const styles = {
   },
   textlenthmax24: {
     flexDirection: 'row',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     alignItems: 'flex-end',
     paddingVertical: 3
   },
