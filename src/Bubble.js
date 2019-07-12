@@ -32,6 +32,7 @@ export default class Bubble extends React.PureComponent {
       msgSnt:false,
       msgRcvd:false,
       msgRead:false,
+      // msgDltd:(new Date().getTime()%1000)
     }
 		this._isMounted=false;
 		this.rcvRdAt = {rcvdat:this.props.currentMessage.rcvdat,readat:this.props.currentMessage.readat};
@@ -64,11 +65,14 @@ export default class Bubble extends React.PureComponent {
 				this.props.onShowInfo(this.rcvRdAt["rcvdat"],this.rcvRdAt["readat"]);
 			}
     })
-		
-    this.listener2 = EventRegister.addEventListener('deSelectMsg', () => {
-      if(this.state.msgSlctd){
+    
+    this.listener2 = EventRegister.addEventListener('BubbleComn', (data) => {
+      if(data.type=='deSelectMsg' && this.state.msgSlctd){
         this.selectMsg();
       }
+      // else if(data.type=='MsgDlted'){
+      //   this.setState({msgDltd:(new Date().getTime()%1000)}); //Just to refresh the bubble
+      // }
     })
   }
 
@@ -252,8 +256,8 @@ export default class Bubble extends React.PureComponent {
             this.props.containerStyle[this.props.position], // for selection ,{backgroundColor:(this.state.msgSlctd?'#ffab91':null)}
           ]}
         >
-          {this.props.position == 'left' ?
-          <View style={[styles.triangleCorner, { borderTopColor: hideTringle?'transparent':'white'},styles.leftTrngl]} /> : null}
+          {/*this.state.msgDltd && */ this.props.position == 'left' ?
+          <View style={[styles.triangleCornerLEFT, { borderTopColor: hideTringle?'transparent':'white'}]} /> : null}
           <View
             style={[
               styles[this.props.position].wrapper,
@@ -270,7 +274,7 @@ export default class Bubble extends React.PureComponent {
             >
               <View>
 								{isCC?<View style={styles.CCtriangle}></View> : null}
-                {this.props.currentMessage.dirctn == 'I' && !hideTringle && this.isGroupChat() && this.renderCustomView()}
+                {/*this.state.msgDltd && */ this.props.currentMessage.dirctn == 'I' && !hideTringle && this.isGroupChat() && this.renderCustomView()}
                 {this.renderMessageImage(isCC)}
                 {this.props.currentMessage.text && this.props.currentMessage.text.length ?
                   <View style={(this.props.currentMessage.text.length < 24 ? styles.textlenthmax24 : styles.textlenthmin25)}>
@@ -287,7 +291,8 @@ export default class Bubble extends React.PureComponent {
               </View>
             </TouchableWithoutFeedback>
           </View>
-          {this.props.position == 'right' ? <View style={[styles.triangleCorner, { borderTopColor: hideTringle?'transparent':'rgba(215,250,173,0.99)', marginLeft: -5, transform: [{ rotate: '0deg' }] }]} /> : null}
+          {/*this.state.msgDltd && */ this.props.position == 'right' ? 
+          <View style={[styles.triangleCornerRIGHT, { borderTopColor: hideTringle?'transparent':'rgba(215,250,173,0.99)' }]} /> : null}
         </View>
         {this.state.msgSlctd && 
         <View onStartShouldSetResponder={() => true} onResponderRelease ={(event) => {this.selectMsg()}}
@@ -358,7 +363,7 @@ const styles = {
     marginRight: 5,
     marginBottom: 2
   },
-  triangleCorner: {
+  triangleCornerLEFT: {
     width: 0,
     height: 0,
     // backgroundColor: 'transparent',
@@ -367,6 +372,21 @@ const styles = {
     borderTopWidth: 15,
     borderRightColor: 'transparent',
     borderRadius: 3,
+    alignSelf: 'flex-start', 
+    position: 'absolute', 
+    transform: [{ rotate: '90deg' }]
+  },
+  triangleCornerRIGHT: {
+    width: 0,
+    height: 0,
+    // backgroundColor: 'transparent',
+    // borderStyle: 'solid',
+    borderRightWidth: 15,
+    borderTopWidth: 15,
+    borderRightColor: 'transparent',
+    borderRadius: 3,
+    marginLeft: -5, 
+    transform: [{ rotate: '0deg' }]
   },
   textlenthmax24: {
     flexDirection: 'row',
@@ -388,9 +408,11 @@ const styles = {
     borderTopWidth: 11,
     borderRightColor: 'transparent',
     borderTopLeftRadius: 3,
-    borderTopColor:'#f9a825',position:'absolute', alignSelf: 'flex-start',transform: [{ rotate: '-90deg' }]
+    borderTopColor:'#f9a825',
+    position:'absolute', 
+    alignSelf: 'flex-start',
+    transform: [{ rotate: '-90deg' }]
   },
-  leftTrngl:{alignSelf: 'flex-start', position: 'absolute', transform: [{ rotate: '90deg' }] },
   selectMsg:{position:'absolute',width:width,height:'103%',margin:0,backgroundColor:'rgba(102,187,106,0.3)'}
 };
 
