@@ -88,6 +88,7 @@ export default class MessageText extends React.Component {
             { type: 'url', style: linkStyle, onPress: this.onUrlPress },
             { type: 'phone', style: linkStyle, onPress: this.onPhonePress },
             { type: 'email', style: linkStyle, onPress: this.onEmailPress },
+	    { pattern: /Rs. \d*\.?\d+/g, style: styles.price},
           ]}
           childrenProps={{ ...this.props.textProps }}
         >
@@ -109,6 +110,10 @@ const textStyle = {
 };
 
 const styles = {
+  price:{
+    color:'#1976d2',
+    textDecorationLine:'underline'
+  },
   left: StyleSheet.create({
     container: {},
     text: {
