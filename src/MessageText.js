@@ -65,6 +65,34 @@ export default class MessageText extends React.Component {
     Communications.email([email], null, null, null, null);
   }
 
+  render1 = (matchingString, matches) =>{
+    if(matchingString && matchingString.length>2){
+      return matchingString.substring(1, matchingString.length-1)
+    }
+    else{
+      return matchingString
+    }
+  }
+
+  // render2 = (matchingString, matches) =>{
+  //   if(matchingString && matchingString.length>4){
+  //     return matchingString.substring(2, matchingString.length-2)
+  //   }
+  //   else{
+  //     return matchingString
+  //   }
+  // }
+
+  // render3 = (matchingString, matches) =>{
+  //   console.log('render3',matchingString)
+  //   if(matchingString && matchingString.length>6){
+  //     return matchingString.substring(3, matchingString.length-3)
+  //   }
+  //   else{
+  //     return matchingString
+  //   }
+  // }
+
   render() {
     const linkStyle = StyleSheet.flatten([styles[this.props.position].link, this.props.linkStyle[this.props.position]]);
 		let Msg = this.props.currentMessage.text||'';
@@ -88,7 +116,24 @@ export default class MessageText extends React.Component {
             { type: 'url', style: linkStyle, onPress: this.onUrlPress },
             { type: 'phone', style: linkStyle, onPress: this.onPhonePress },
             { type: 'email', style: linkStyle, onPress: this.onEmailPress },
-	    { pattern: /Rs. \d*\.?\d+/g, style: styles.price},
+            { pattern: /Rs. \d*\.?\d+/g, style: styles.price},
+
+            // { pattern: /(\$\*.+?\*\$)+/g, style: {fontFamily: 'Satisfy',fontWeight:'bold'}, renderText: this.render2},
+            // { pattern: /(\*\$.+?\$\*)+/g, style: StyleSheet.flatten([styles.satisfy,styles.bold]), renderText: this.render2},
+            // { pattern: /(\^\*.+?\*\^)+|(\*\^.+?\^\*)+/g, style: StyleSheet.flatten([styles.mono,styles.bold]), renderText: this.render2},
+
+            // { pattern: /(_~\*.+?\*~_)+|(_\*~.+?~\*_)+|(\*_~.+?~_\*)+|(\*~_.+?_~\*)+|(~\*_.+?_\*~)+|(~_\*.+?\*_~)+/g, style: StyleSheet.flatten([styles.bold,styles.underline,styles.italic]), renderText: this.render3},
+
+            // { pattern: /(\*~.+?~\*)+|(~\*.+?\*~)+/g, style: StyleSheet.flatten([styles.bold,styles.underline]), renderText: this.render2},
+            // { pattern: /(\*_.+?_\*)+|(_\*.+?\*_)+/g, style: StyleSheet.flatten([styles.bold,styles.italic]), renderText: this.render2},
+            // { pattern: /(_~.+?~_)+|(~_.+?_~)+/g, style: StyleSheet.flatten([styles.underline,styles.italic]), renderText: this.render2},
+            
+            // { pattern: /(\*.+?\*)+/g, style: styles.bold, renderText: this.render1},
+            // { pattern: /(~.+?~)+/g, style: styles.underline, renderText: this.render1},
+            // { pattern: /(_.+?_)+/g, style: styles.italic, renderText: this.render1},
+
+            { pattern: /(\$.+?\$)+/g, style: styles.satisfy, renderText: this.render1},
+            { pattern: /(\^.+?\^)+/g, style: styles.mono, renderText: this.render1},
           ]}
           childrenProps={{ ...this.props.textProps }}
         >
@@ -101,7 +146,7 @@ export default class MessageText extends React.Component {
 }
 
 const textStyle = {
-  fontSize: 15,
+  fontSize: 13.5,
   //lineHeight: 20,
   marginTop: 3,
   marginBottom: 3,
@@ -113,6 +158,22 @@ const styles = {
   price:{
     color:'#1976d2',
     textDecorationLine:'underline'
+  },
+  // bold:{
+  //   fontWeight: 'bold',
+  //   fontSize:textStyle.fontSize-0.5
+  // },
+  // underline:{
+  //   textDecorationLine:'underline'
+  // },
+  // italic:{
+  //   fontStyle:'italic'
+  // },
+  satisfy:{
+    fontFamily:'Satisfy'
+  },
+  mono:{
+    fontFamily:'monospace'
   },
   left: StyleSheet.create({
     container: {},
@@ -177,3 +238,4 @@ MessageText.propTypes = {
   textProps: PropTypes.object,
   customTextStyle: Text.propTypes.style,
 };
+
