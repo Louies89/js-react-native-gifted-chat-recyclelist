@@ -128,9 +128,9 @@ export default class MessageText extends React.Component {
             // { pattern: /(\*_.+?_\*)+|(_\*.+?\*_)+/g, style: StyleSheet.flatten([styles.bold,styles.italic]), renderText: this.render2},
             // { pattern: /(_~.+?~_)+|(~_.+?_~)+/g, style: StyleSheet.flatten([styles.underline,styles.italic]), renderText: this.render2},
             
-            // { pattern: /(\*.+?\*)+/g, style: styles.bold, renderText: this.render1},
-            // { pattern: /(~.+?~)+/g, style: styles.underline, renderText: this.render1},
-            // { pattern: /(_.+?_)+/g, style: styles.italic, renderText: this.render1},
+            { pattern: /(\*.+?\*)+/g, style: styles.bold, renderText: this.render1},
+            { pattern: /(~.+?~)+/g, style: styles.underline, renderText: this.render1},
+            { pattern: /(_.+?_)+/g, style: styles.italic, renderText: this.render1},
 
             { pattern: /(\$.+?\$)+/g, style: styles.satisfy, renderText: this.render1},
             { pattern: /(\^.+?\^)+/g, style: styles.mono, renderText: this.render1},
